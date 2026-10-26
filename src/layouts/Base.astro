@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "pact/ · Public Alignment & Control Tooling",
+  description = "Open-source research infrastructure, diagnostic tooling and practice environments for independent AI safety researchers.",
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const nav = [
+  { href: "/#projects", label: "projects" },
+  { href: "/resources", label: "resources" },
+  { href: "https://github.com/pact-safety", label: "github ↗" },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/brand/pact-avatar-dark.png", Astro.site)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap"
+    />
+  </head>
+  <body class="min-h-dvh">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:bg-sheet focus:px-3 focus:py-2">Skip to content</a>
+    <header class="border-b border-rule">
+      <div class="wrap flex flex-wrap items-center gap-x-6 gap-y-1 py-2">
+        <a href="/" class="py-2.5 font-display text-[22px] font-extrabold tracking-tighter no-underline">pact<span class="text-accent">/</span></a>
+        <nav aria-label="Site" class="ml-auto flex flex-wrap gap-0.5 font-mono text-[15px]">
+          {nav.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="wrap pb-18">
+      <slot />
+    </main>
+    <footer class="wrap">
+      <div class="flex flex-wrap gap-x-6 gap-y-2 border-t border-rule py-4 font-mono text-[13px] text-muted">
+        <span>pact/ · Public Alignment &amp; Control Tooling</span>
+        <a href="https://github.com/pact-safety" class="ml-auto">github.com/pact-safety</a>
+      </div>
+    </footer>
+  </body>
+</html>

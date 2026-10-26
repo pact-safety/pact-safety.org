@@ -1,0 +1,68 @@
+---
+import Base from "../layouts/Base.astro";
+import { categories, resources, VERIFIED_ON } from "../data/resources";
+
+const verified = new Date(VERIFIED_ON).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const chips = [{ label: "All", count: resources.length }, ...categories.map((c) => ({ label: c, count: resources.filter((r) => r.category === c).length }))];
+---
+<Base title="Resources · pact/" description="Open-source AI safety tools other people built, each with its maintainer, license and source.">
+  <section class="flex flex-wrap items-end justify-between gap-x-12 gap-y-6 pt-14 pb-8">
+    <div class="flex min-w-0 flex-1 basis-[520px] flex-col gap-4">
+      <span class="font-mono text-sm text-muted">pact/resources</span>
+      <h1 class="font-display text-[clamp(32px,5vw,52px)] leading-[1.05] font-extrabold tracking-tight">Open tools we use and recommend</h1>
+      <p class="max-w-[620px] text-lg leading-relaxed text-ink-2">Other people built these. Each entry names its maintainer, its license and where to find the source, so you can judge it for yourself.</p>
+    </div>
+    <p class="basis-[300px] font-mono text-[13px] leading-relaxed text-muted">Checked against each repository on {verified}. Licenses are as declared in the repository.</p>
+  </section>
+
+  <div role="group" aria-label="Filter by category" class="flex flex-wrap gap-2 pb-5" data-filters>
+    {chips.map((c, k) => (
+      <button type="button" data-cat={c.label} aria-pressed={k === 0 ? "true" : "false"}
+        class="inline-flex min-h-11 cursor-pointer items-center gap-2 border-[1.5px] border-ink px-4 text-[15px] font-semibold transition-colors aria-pressed:bg-ink aria-pressed:text-paper hover:bg-hover aria-pressed:hover:bg-ink">
+        {c.label} <span class="font-mono text-xs opacity-70">{c.count}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="border-t-[1.5px] border-ink">
+    {resources.map((r) => (
+      <article data-cat={r.category} class="flex flex-wrap items-start gap-x-8 gap-y-3 border-b border-rule py-5.5">
+        <div class="flex min-w-0 flex-1 basis-[240px] flex-col gap-1.5">
+          <h2 class="text-xl leading-tight font-semibold">{r.name}</h2>
+          <span class="text-[15px] text-muted">{r.maintainer}</span>
+          <span class="font-mono text-[11px] tracking-wider text-muted uppercase">{r.category}</span>
+        </div>
+        <div class="flex min-w-0 flex-[2_1_380px] flex-col gap-2">
+          <p class="text-[17px] leading-relaxed">{r.description}</p>
+          {r.cite && <p class="text-[15px] leading-normal text-muted">{r.cite}</p>}
+          <div class="flex flex-wrap gap-x-4.5 gap-y-1.5 text-[15px] font-semibold">
+            <a href={`https://github.com/${r.repo}`}>github.com/{r.repo}</a>
+            {r.docs && <a href={r.docs.href}>{r.docs.label}</a>}
+          </div>
+        </div>
+        <div class="flex basis-[150px] flex-col items-start gap-1.5">
+          <span class={`px-2 py-1 font-mono text-xs ${r.license === "No license file" ? "border border-dashed border-accent text-accent" : "border border-rule bg-sheet"}`}>{r.license}</span>
+          {r.note && <span class="font-mono text-xs text-muted">{r.note}</span>}
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="mt-10 flex flex-wrap justify-between gap-x-12 gap-y-4 leading-relaxed text-muted">
+    <p class="max-w-[560px]">Missing something, or is an entry out of date? Open an issue at <a href="https://github.com/pact-safety/pact-safety.org/issues">github.com/pact-safety/pact-safety.org</a> with a link to the source.</p>
+    <p class="max-w-[420px]">Listing a project here is not an endorsement by its maintainers, and PACT has no affiliation with them.</p>
+  </div>
+</Base>
+
+<script>
+  // Progressive enhancement: everything is listed without JS; chips filter.
+  const group = document.querySelector<HTMLElement>("[data-filters]");
+  const rows = document.querySelectorAll<HTMLElement>("article[data-cat]");
+  group?.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("button[data-cat]");
+    if (!btn) return;
+    const cat = btn.dataset.cat;
+    for (const b of group.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b === btn));
+    for (const row of rows) row.hidden = cat !== "All" && row.dataset.cat !== cat;
+  });
+</script>

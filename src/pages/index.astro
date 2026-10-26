@@ -1,0 +1,97 @@
+---
+import Base from "../layouts/Base.astro";
+import { listProjects, statusLabel } from "../data/projects";
+import { resources } from "../data/resources";
+
+const projects = listProjects();
+const live = projects.filter((p) => p.status === "live").length;
+
+// The hero cycles through projects, then the resources page.
+const heroItems = [
+  { name: "bench", desc: "practise research engineering, every day" },
+  { name: "touchstone", desc: "rate evals live, against public standards" },
+  ...projects
+    .filter((p) => p.slug !== "bench" && p.slug !== "touchstone")
+    .map((p) => ({ name: p.slug, desc: p.summary.toLowerCase().replace(/\.$/, "") })),
+  { name: "resources", desc: `${resources.length} open tools other people built, cited` },
+];
+const clone = "git clone https://github.com/pact-safety/bench";
+
+const principles = [
+  { title: "open & accessible", body: "Open source, self-hostable, runs on your own API keys. No lock-in." },
+  { title: "built for independents", body: "Sized for one researcher or a small team, with the leverage a lab's internal tooling gives its staff." },
+  { title: "rigor you can check", body: "Benchmarks and audit harnesses ship with what you need to rerun them and get the same answer." },
+];
+---
+<Base>
+  <section class="flex flex-col gap-7 pt-[clamp(48px,9vw,112px)] pb-[clamp(40px,6vw,72px)]" data-hero data-items={JSON.stringify(heroItems)}>
+    <div aria-hidden="true" class="overflow-hidden whitespace-nowrap font-display text-[clamp(38px,8.5vw,104px)] leading-none font-extrabold tracking-[-0.05em]">
+      pact<span class="text-accent">/</span><span data-typed>{heroItems[0].name}</span><span class="caret ml-[0.04em] inline-block h-[0.82em] w-[0.08em] bg-accent align-[-0.06em]"></span>
+    </div>
+    <p aria-live="polite" data-desc class="min-h-[1.5em] font-mono text-[clamp(15px,1.6vw,18px)] text-muted transition-opacity duration-200">→ {heroItems[0].desc}</p>
+    <h1 class="max-w-[760px] text-[clamp(26px,3.4vw,40px)] leading-tight font-semibold tracking-tight">Open tools for independent AI safety research.</h1>
+    <p class="max-w-[640px] text-lg leading-relaxed text-ink-2">
+      PACT (Public Alignment &amp; Control Tooling) builds research infrastructure, diagnostic tooling and practice environments for people doing AI safety work outside the big labs. Use them to get started, or to make the research you already do more rigorous.
+    </p>
+    <div class="flex flex-wrap items-stretch gap-3">
+      <a href="https://bench.pact-safety.dev" class="inline-flex min-h-12 items-center bg-ink px-5 font-semibold text-paper no-underline hover:text-paper hover:opacity-90">Start with bench</a>
+      <div class="flex min-h-12 min-w-0 items-center gap-3 border-[1.5px] border-ink py-1 pr-1.5 pl-4 font-mono text-sm">
+        <code class="min-w-0 truncate">{clone}</code>
+        <button type="button" data-copy={clone} class="min-h-9 shrink-0 cursor-pointer bg-hover px-3 text-[13px] hover:text-accent">copy</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="flex scroll-mt-6 flex-col gap-5 pt-6">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <h2 class="font-display text-[clamp(22px,2.4vw,28px)] font-bold tracking-tight">Projects</h2>
+      <span class="font-mono text-sm text-muted">{projects.length} under pact/ · {live} live</span>
+    </div>
+    <div class="border-t-[1.5px] border-ink">
+      {projects.map((p, k) => (
+        <details class="project group border-b border-rule" name="projects" open={k === 0}>
+          <summary class="flex cursor-pointer flex-wrap items-baseline gap-x-5 gap-y-1.5 px-2 py-4.5 transition-colors hover:bg-hover">
+            <span class="min-w-[210px] font-mono font-semibold transition-colors group-hover:text-accent"><span class="font-normal text-muted">pact/</span>{p.slug}</span>
+            <span class={`w-[120px] font-mono text-[13px] ${p.status === "live" ? "text-live" : "text-muted"}`}>{statusLabel[p.status]}</span>
+            <span class="min-w-0 flex-1 basis-[300px] leading-normal text-ink-2">{p.summary}</span>
+            <span aria-hidden="true" class="project-sign font-mono text-lg text-muted transition-transform duration-200">+</span>
+          </summary>
+          <div class="flex flex-wrap items-start gap-x-8 gap-y-3 px-2 pb-5.5">
+            <p class="min-w-0 max-w-[640px] flex-1 basis-[420px] leading-relaxed text-ink-2">{p.detail}</p>
+            <div class="flex flex-col gap-1.5 font-mono text-sm font-semibold">
+              {p.href && <a href={p.href}>{p.hrefLabel} →</a>}
+              {p.repo && <a href={p.repo}>source →</a>}
+              {!p.href && !p.repo && <span class="text-[13px] font-normal text-muted">not public yet</span>}
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="pt-16">
+    <a href="/resources" class="lift flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border border-rule bg-sheet p-[clamp(20px,3vw,32px)] no-underline hover:border-ink hover:text-ink">
+      <div class="flex min-w-0 flex-1 basis-[380px] flex-col gap-2">
+        <h2 class="font-display text-[clamp(22px,2.4vw,28px)] font-bold tracking-tight">Resources</h2>
+        <p class="leading-relaxed text-ink-2">{resources.length} open tools other people built, from Inspect to TransformerLens, each listed with its maintainer, license and source.</p>
+      </div>
+      <span class="font-mono font-semibold text-accent">pact/resources →</span>
+    </a>
+  </section>
+
+  <section id="how-we-build" class="flex flex-col gap-5 pt-16 pb-6">
+    <h2 class="font-display text-[clamp(22px,2.4vw,28px)] font-bold tracking-tight">How we build</h2>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-8 gap-y-6 border-t-[1.5px] border-ink pt-5">
+      {principles.map((x) => (
+        <div class="flex flex-col gap-2">
+          <span class="font-mono font-semibold text-accent">{x.title}</span>
+          <p class="leading-relaxed text-ink-2">{x.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<script>
+  import "../scripts/hero";
+</script>
