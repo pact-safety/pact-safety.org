@@ -52,7 +52,7 @@ const principles = [
         <details class="project group border-b border-rule" name="projects" open={k === 0}>
           <summary class="flex cursor-pointer flex-wrap items-baseline gap-x-5 gap-y-1.5 px-2 py-4.5 transition-colors hover:bg-hover">
             <span class="min-w-[210px] font-mono font-semibold transition-colors group-hover:text-accent"><span class="font-normal text-muted">pact/</span>{p.slug}</span>
-            <span class={`w-[120px] font-mono text-[13px] ${p.status === "live" ? "text-live" : "text-muted"}`}>{statusLabel[p.status]}</span>
+            <span class={`w-[120px] font-mono text-[13px] ${p.status === "live" ? "text-ok" : "text-muted"}`}>{statusLabel[p.status]}</span>
             <span class="min-w-0 flex-1 basis-[300px] leading-normal text-ink-2">{p.summary}</span>
             <span aria-hidden="true" class="project-sign font-mono text-lg text-muted transition-transform duration-200">+</span>
           </summary>

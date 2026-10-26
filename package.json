@@ -9,6 +9,7 @@
     "sync-repos": "node scripts/sync-repos.mjs"
   },
   "dependencies": {
+    "@pact-safety/tokens": "github:pact-safety/tokens#v0.1.0",
     "astro": "7.3.8"
   },
   "devDependencies": {
