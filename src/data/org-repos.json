@@ -1,1 +1,45 @@
-[{"archived":false,"created_at":"2026-10-24T03:05:06Z","description":"Public Alignment \u0026 Control Tooling — open-source research infrastructure \u0026 deliberate-practice environments for AI safety.","fork":false,"homepage":null,"html_url":"https://github.com/pact-safety/.github","name":".github","topics":[]},{"archived":false,"created_at":"2026-10-24T05:17:27Z","description":"A deliberate-practice environment for engineers transitioning into AI safety research engineering.","fork":false,"homepage":null,"html_url":"https://github.com/pact-safety/bench","name":"bench","topics":[]}]
+[
+  {
+    "name": ".github",
+    "description": "Public Alignment & Control Tooling — open-source research infrastructure & deliberate-practice environments for AI safety.",
+    "html_url": "https://github.com/pact-safety/.github",
+    "homepage": null,
+    "archived": false,
+    "fork": false,
+    "topics": [],
+    "created_at": "2026-10-24T03:05:06Z"
+  },
+  {
+    "name": "bench",
+    "description": "A deliberate-practice environment for engineers transitioning into AI safety research engineering.",
+    "html_url": "https://github.com/pact-safety/bench",
+    "homepage": null,
+    "archived": false,
+    "fork": false,
+    "topics": [],
+    "created_at": "2026-10-24T05:17:27Z"
+  },
+  {
+    "name": "pact-safety.org",
+    "description": "Source for pact-safety.org: open tools for independent AI safety research.",
+    "html_url": "https://github.com/pact-safety/pact-safety.org",
+    "homepage": "https://pact-safety.org",
+    "archived": false,
+    "fork": false,
+    "topics": [],
+    "created_at": "2026-10-26T13:08:48Z"
+  },
+  {
+    "name": "tokens",
+    "description": "Shared color, type and shape tokens for pact-safety tools.",
+    "html_url": "https://github.com/pact-safety/tokens",
+    "homepage": null,
+    "archived": false,
+    "fork": false,
+    "topics": [
+      "design-tokens",
+      "pact-hide"
+    ],
+    "created_at": "2026-10-26T15:02:38Z"
+  }
+]
