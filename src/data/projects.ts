@@ -36,10 +36,12 @@ const curated: Project[] = [
   },
   {
     slug: "touchstone",
-    status: "building",
-    summary: "A live eval rating tool that rates against public standards.",
+    status: "live",
+    summary: "Rigor ratings for AI benchmarks, across published benchmark-quality standards.",
     detail:
-      "Touchstone rates evaluations live, against public standards. It is in development; its repository will show up here when it goes public.",
+      "Touchstone encodes the published standards for what makes a benchmark good as data, applies each one to a benchmark with cited evidence, and shows the verdicts side by side, so you can see how rigorous a benchmark is and where the standards disagree. Scores are a deterministic function of the verdicts; model-drafted assessments are labelled and never count.",
+    href: "https://touchstone.pact-safety.dev",
+    hrefLabel: "touchstone.pact-safety.dev",
   },
 ];
 

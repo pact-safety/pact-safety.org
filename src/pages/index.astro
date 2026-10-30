@@ -9,7 +9,7 @@ const live = projects.filter((p) => p.status === "live").length;
 // The hero cycles through projects, then the resources page.
 const heroItems = [
   { name: "bench", desc: "practise research engineering, every day" },
-  { name: "touchstone", desc: "rate evals live, against public standards" },
+  { name: "touchstone", desc: "rate benchmarks against published standards" },
   ...projects
     .filter((p) => p.slug !== "bench" && p.slug !== "touchstone")
     .map((p) => ({ name: p.slug, desc: p.summary.toLowerCase().replace(/\.$/, "") })),
