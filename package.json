@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@pact-safety/tokens": "github:pact-safety/tokens#v0.1.0",
-    "astro": "7.3.8"
+    "astro": "7.4.7"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
